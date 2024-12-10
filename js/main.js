@@ -1,29 +1,45 @@
-const items = document.querySelectorAll('.item');
-const placeholders = document.querySelectorAll('.placeholder')
+const draggables = document.querySelectorAll('.item');
+const dropitems = document.querySelectorAll('.container');
 
-for (const item of items) {
-    item.addEventListener('dragstart', (event) => {
-        let selected = event.target;
+draggables.forEach((task) => {
+    task.addEventListener("dragstart", () => {
+        task.classList.add("hovered");
+    });
+    task.addEventListener("dragend", () => {
+        task.classList.remove("hovered");
+    });
+})
 
-        for (const placeholder of placeholders) {
-            placeholder.addEventListener("dragover", (event) => {
-                event.preventDefault();
-            });
-            placeholder.addEventListener("dragenter", () => {
-                placeholder.classList.add('hovered');
-            });
-            placeholder.addEventListener("dragleave", () => {
-                placeholder.classList.remove('hovered');
-            });
-            placeholder.addEventListener("drop", () => {
-                placeholder.append(selected);
-                selected = '';
-            });
+dropitems.forEach((area) => {
+    area.addEventListener("dragover", (event) => {
+        event.preventDefault();
+
+        const bottomTask = insertAboveTask(area, event.clientY);
+        const curTask = document.querySelector(".hovered");
+
+        if (!bottomTask) {
+            area.appendChild(curTask);
+        } else {
+            area.insertBefore(curTask, bottomTask);
+        }
+    })
+})
+
+const insertAboveTask = (placeholder, mouseY) => {
+    const els = placeholder.querySelectorAll(".item:not(.hovered)");
+
+    let closesTask = null;
+    let closesOffset = Number.NEGATIVE_INFINITY;
+
+    els.forEach((task) => {
+        const { top } = task.getBoundingClientRect();
+        const offset = mouseY - top;
+
+        if (offset < 0 && offset > closesOffset) {
+            closesOffset = offset;
+            closesTask = task;
         }
     });
-
-    item.addEventListener('dragend', (event) => {
-        event.target.className = 'item';
-    });
+    return closesTask;
 }
 

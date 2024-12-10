@@ -1,29 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <title>Task tracker</title>
 
   <link rel="stylesheet" href="css/style.css" />
 
 </head>
 <body>
 <div>
-  <div class="row">
-      <div class="col-header start">Начать</div>
-      <div class="col-header progress">В процессе</div>
-      <div class="col-header done">Готовы</div>
-  </div>
+  <div class="wrapper">
+    <div class="container" id="start">
+      <h3 class="heading">Начать</h3>
 
-  <div class="row">
-    <div class="placeholder">
       <div class="item" draggable="true">Задание 1</div>
-    </div>
-    <div class="placeholder">
       <div class="item" draggable="true">Задание 2</div>
+      <div class="item" draggable="true">Задание 3</div>
     </div>
-    <div class="placeholder"></div>
+
+    <div class="container" id="progress">
+      <h3 class="heading">В процессе</h3>
+
+      <div class="item" draggable="true">Задание 11</div>
+      <div class="item" draggable="true">Задание 21</div>
+    </div>
+
+    <div class="container" id="done">
+      <h3 class="heading">Готовы</h3>
+
+      <div class="item" draggable="true">Задание 100</div>
+    </div>
+
   </div>
 </div>
 
